@@ -1,8 +1,11 @@
 import { FlatList, Pressable, StatusBar, TouchableOpacity } from "react-native";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { TextInput } from "react-native";
 import { Dimensions } from "react-native";
 import { useState } from "react";
+
+const finishIcon = require("./assets/check.png");
+const deleteIcon = require("./assets/bin.png");
 
 export default function App() {
   const [newTask, setNewTask] = useState("");
@@ -15,7 +18,7 @@ export default function App() {
       </View>
       <View style={styles.addBar}>
         <TextInput
-          onChangeText={text => setNewTask(text)}
+          onChangeText={(text) => setNewTask(text)}
           style={styles.input}
           placeholder="Enter your task here"
           placeholderTextColor="#ffffff"
@@ -23,23 +26,41 @@ export default function App() {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
-            setTasks([...tasks, {title: newTask}]);
+            if (newTask.length > 0) setTasks([...tasks, { title: newTask }]);
           }}
         >
           <Text style={styles.addSymbol}>+</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.containerList}>
-        <FlatList
-          data={tasks}
-          renderItem={( {item, index} ) => {
-            return (
-              <View key={index} style={styles.task}>
-                <Text style={styles.taskTitle}>{item.title}</Text>
-              </View>
-            );
-          }}
-        ></FlatList>
+        {tasks.length == 0 ? (
+          <Text style={styles.whiteText}>Tasks will appear here</Text>
+        ) : (
+          <FlatList
+            data={tasks}
+            renderItem={({ item, index }) => {
+              return (
+                <View key={index} style={styles.task}>
+                  <Text style={styles.taskTitle}>{item.title}</Text>
+                  <TouchableOpacity
+                    style={styles.taskButton}
+                    onPress={() => {
+                    }}
+                  >
+                    <Image style={styles.photo} source={finishIcon}></Image>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.taskButton}
+                    onPress={() => {
+                    }}
+                  >
+                    <Image style={styles.photo} source={deleteIcon}></Image>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+          ></FlatList>
+        )}
       </View>
     </View>
   );
@@ -64,7 +85,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: Dimensions.get("window").width - 50,
-
     color: "white",
     borderWidth: 2,
     borderColor: "gray",
@@ -93,17 +113,40 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignItems: "center",
   },
+  whiteText: {
+    color: "white",
+  },
   task: {
     backgroundColor: "#1a1a1a",
     width: Dimensions.get("window").width - 20,
     height: 60,
     borderRadius: 15,
     marginBottom: 10,
-    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   taskTitle: {
-    color: "white",
     marginLeft: 10,
-    width: Dimensions.get("window").width - 100,
+    color: "white",
+    width: Dimensions.get("window").width - 140,
+  },
+  taskButton: {
+    backgroundColor: "#242323",
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 7,
+  },
+  finishSymbol: {
+    fontSize: 20,
+  },
+  photo: {
+    height: 30,
+    width: 30,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
