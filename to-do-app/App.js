@@ -26,7 +26,8 @@ export default function App() {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => {
-            if (newTask.length > 0) setTasks([...tasks, { title: newTask }]);
+            if (newTask.length > 0)
+              setTasks([...tasks, { title: newTask, id: uid() }]);
           }}
         >
           <Text style={styles.addSymbol}>+</Text>
@@ -44,14 +45,17 @@ export default function App() {
                   <Text style={styles.taskTitle}>{item.title}</Text>
                   <TouchableOpacity
                     style={styles.taskButton}
-                    onPress={() => {
-                    }}
+                    onPress={() => {}}
                   >
                     <Image style={styles.photo} source={finishIcon}></Image>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.taskButton}
                     onPress={() => {
+                      const arr = tasks.filter((current) => {
+                        current.id != item.id;
+                      });
+                      setTasks(arr);
                     }}
                   >
                     <Image style={styles.photo} source={deleteIcon}></Image>
@@ -65,6 +69,10 @@ export default function App() {
     </View>
   );
 }
+
+const uid = function () {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
 
 const styles = StyleSheet.create({
   background: {
@@ -135,8 +143,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 7,
   },
   finishSymbol: {
@@ -146,7 +154,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
