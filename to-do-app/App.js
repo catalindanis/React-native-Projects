@@ -2,11 +2,11 @@ import { FlatList, Pressable, StatusBar, TouchableOpacity } from "react-native";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { TextInput } from "react-native";
 import { Dimensions } from "react-native";
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function App() {
-
-  const [tasks, setTasks] = useState(["task1", "task2", "task3"]);
+  const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState([]);
 
   return (
     <View style={styles.background}>
@@ -15,21 +15,31 @@ export default function App() {
       </View>
       <View style={styles.addBar}>
         <TextInput
+          onChangeText={text => setNewTask(text)}
           style={styles.input}
           placeholder="Enter your task here"
           placeholderTextColor="#ffffff"
         ></TextInput>
-        <TouchableOpacity style={styles.addButton}
-        onPress={() => {return <Text style={styles.test}>test</Text>}}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => {
+            setTasks([...tasks, {title: newTask}]);
+          }}
+        >
           <Text style={styles.addSymbol}>+</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.containerList}>
-        <FlatList data={tasks} renderItem={(item) => {
-          return <View style={styles.task}>
-
-          </View>
-        }}></FlatList>
+        <FlatList
+          data={tasks}
+          renderItem={( {item, index} ) => {
+            return (
+              <View key={index} style={styles.task}>
+                <Text style={styles.taskTitle}>{item.title}</Text>
+              </View>
+            );
+          }}
+        ></FlatList>
       </View>
     </View>
   );
@@ -54,7 +64,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: Dimensions.get("window").width - 50,
-    
+
     color: "white",
     borderWidth: 2,
     borderColor: "gray",
@@ -84,10 +94,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   task: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: "#1a1a1a",
     width: Dimensions.get("window").width - 20,
     height: 60,
     borderRadius: 15,
     marginBottom: 10,
+    justifyContent: "center",
+  },
+  taskTitle: {
+    color: "white",
+    marginLeft: 10,
+    width: Dimensions.get("window").width - 100,
   },
 });
