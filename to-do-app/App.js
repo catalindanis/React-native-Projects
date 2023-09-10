@@ -41,19 +41,16 @@ export default function App() {
             data={tasks}
             renderItem={({ item, index }) => {
               return (
-                <View key={index} style={styles.task}>
+                <View key={index} style={styles.taskUnfinished}>
                   <Text style={styles.taskTitle}>{item.title}</Text>
-                  <TouchableOpacity
-                    style={styles.taskButton}
-                    onPress={() => {}}
-                  >
-                    <Image style={styles.photo} source={finishIcon}></Image>
-                  </TouchableOpacity>
+                  
                   <TouchableOpacity
                     style={styles.taskButton}
                     onPress={() => {
-                      const arr = tasks.filter((current) => {
-                        current.id != item.id;
+                      const arr = [];
+                      tasks.map((current) => {
+                        if(current.id != item.id)
+                          arr.push(current);
                       });
                       setTasks(arr);
                     }}
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
   whiteText: {
     color: "white",
   },
-  task: {
+  taskUnfinished: {
     backgroundColor: "#1a1a1a",
     width: Dimensions.get("window").width - 20,
     height: 60,
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
   taskTitle: {
     marginLeft: 10,
     color: "white",
-    width: Dimensions.get("window").width - 140,
+    width: Dimensions.get("window").width - 90,
   },
   taskButton: {
     backgroundColor: "#242323",
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 7,
+    right: 0,
   },
   finishSymbol: {
     fontSize: 20,
