@@ -4,3 +4,6 @@
 [submodule "expense-tracker"]
 	path = expense-tracker
 	url = https://github.com/catalindanis/Money-Tracker
+[submodule "expenses-tracker"]
+	path = expenses-tracker
+	url = https://github.com/catalindanis/expenses-tracker
