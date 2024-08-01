@@ -1,6 +1,3 @@
 [submodule "authenticate-application-with-firebase"]
 	path = authenticate-application-with-firebase
 	url = https://github.com/catalindanis/Money-Tracker
-[submodule "expenses-tracker"]
-	path = expenses-tracker
-	url = https://github.com/catalindanis/expenses-tracker
