@@ -3,4 +3,4 @@
 	url = https://github.com/catalindanis/Money-Tracker
 [submodule "expense-tracker"]
 	path = expense-tracker
-	url = https://github.com/catalindanis/expense-tracker
+	url = https://github.com/catalindanis/Money-Tracker
